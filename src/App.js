@@ -1,12 +1,14 @@
 import React, { useState, useEffect } from 'react';
 import Board from './Components/Board/Board'
 import initializeDeck from './deck'
+import './App.css';
 function App() {
   const [flipped, setFlipped] = useState([]);
   const [cards, setCards] = useState([]);
   const [dimension,setDimension]=useState(400);
 const [solved,setSolved]=useState([]);
 const [disabled,setDisabled]=useState(false);
+let finish=false;
   useEffect(() => {
     resizeBoard()
     setCards(initializeDeck())
@@ -25,7 +27,9 @@ const [disabled,setDisabled]=useState(false);
 
 
   const handleClick = (id) => {
+
    setDisabled(true)
+
    if(flipped.length ===0){ 
     setFlipped([ id])
     setDisabled(false)
@@ -36,13 +40,20 @@ const [disabled,setDisabled]=useState(false);
      if(isMatch(id)){
        setSolved([...solved,flipped[0],id])
       resetCard()
+      
+     
+     
      }else{
-       setTimeout(resetCard,2000)
+       setTimeout(resetCard,1000)
      }
    }
     
   
   }
+ 
+  if(solved.length===cards.length){
+    finish=true;
+          }
 const preloadImages=()=>{
   cards.map(card=>{
     const src=`/img/${card.type}.png`
@@ -71,7 +82,7 @@ const preloadImages=()=>{
   }
   return (
     <div className="App">
-      <h2>Puedes recordar donde estan las cartas?</h2>
+      <h2 className="font">Memorama Lenguaje de Señas</h2>
       <Board
       dimension={dimension}
         cards={cards}
@@ -79,6 +90,7 @@ const preloadImages=()=>{
         handleClick={handleClick} 
         disabled={disabled}
         solved={solved}
+        finish={finish}
         />
     </div>
   );

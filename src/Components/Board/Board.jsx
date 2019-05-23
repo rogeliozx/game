@@ -9,15 +9,20 @@ import './board.css'
       flipped ,
       handleClick,
     solved,
+    finish,
     }){
+        if(finish!=true){
+
      return <div className="board">
  {
+    
      cards.map((card) =>(
+         
      <Card
      key={card.id}
         id={card.id}
-        width={dimension/4.5}
-        height={dimension/4.5}
+        width={dimension/3}
+        height={dimension/3}
         flipped={flipped.includes(card.id)}
         handleClick={handleClick}
         disabled={disabled || solved.includes(card.id)}
@@ -25,11 +30,19 @@ import './board.css'
         solved={solved.includes(card.id)}
         />))
  }
+ 
+ 
+     </div>
+ }if(finish===true){
+     return <div>
+        <img src="/img/finish.gif" alt="finish" />
      </div>
  }
-
+ 
+}
  Board.propTypes={
     disabled:PropTypes.bool.isRequired,
+    finish:PropTypes.bool.isRequired,
      dimension:PropTypes.number.isRequired,
      cards:PropTypes.arrayOf(PropTypes.shape({})).isRequired,
      flipped:PropTypes.arrayOf(PropTypes.number).isRequired,
